@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeatBox India — Self-Heating Ready Meals | Shop Now</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom Styles & Animation Keyframes */
+        .font-outfit { font-family: 'Outfit', sans-serif; }
+        .font-serif { font-family: 'Noto Serif', serif; }
+
+        /* Floating Navbar Transition */
+        .floating-nav { 
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; 
+            transform: translateY(0); 
+        }
+        .nav-hidden { 
+            transform: translateY(-100%); 
+            box-shadow: none;
+        }
+
+        /* Keyframe for subtle fadeInUp animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0; /* Start invisible */
+        }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Gradient Text/Accent */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #FF5722, #FFC107); /* Orange to Yellow */
+        }
+
+        /* Product Card Hover Effect */
+        .product-card:hover .product-img {
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        /* Hero Background FIX: Ensure z-index works correctly */
+        .hero-bg {
+            background-image: url('images/hero_background.png');
+            background-position: center top;
+            background-size: cover;
+            opacity: 0.5; 
+        }
+
+        /* Scrollbar styles for checkout panel */
+        .scrollbar-hidden::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hidden {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="font-outfit bg-white text-gray-800 antialiased overflow-x-hidden">
+
+    <!-- Floating Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-lg floating-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <a href="#" class="text-3xl font-extrabold text-orange-600 tracking-wider">
+                    Heat<span class="text-gray-900">Box</span>
+                </a>
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-8 text-gray-700 font-semibold">
+                    <a href="#how-it-works" class="hover:text-orange-600 transition">How It Works</a>
+                    <a href="#products" class="hover:text-orange-600 transition">Meals</a>
+                    <a href="#science" class="hover:text-orange-600 transition">Science</a>
+                    <a href="#testimonials" class="hover:text-orange-600 transition">Reviews</a>
+                </nav>
+                <!-- CTA Button & Cart -->
+                <div class="flex items-center space-x-4">
+                    <!-- Cart Icon -->
+                    <button id="cart-button" onclick="showCheckout()" class="relative p-2 rounded-full bg-gray-100 hover:bg-orange-100 text-gray-700 hover:text-orange-600 transition duration-300">
+                        <!-- SVG Shopping Cart Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <!-- Cart Item Count Badge -->
+                        <span id="cart-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">0</span>
+                    </button>
+
+                    <a href="#" onclick="showCheckout()" class="hidden md:block px-5 py-2 text-sm font-semibold rounded-full bg-orange-600 text-white shadow-md hover:bg-orange-700 transition duration-300">
+                        Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Hero Section -->
+        <section id="hero" class="pt-40 pb-24 md:pt-60 md:pb-32 relative overflow-hidden bg-gray-50">
+            
+            <!-- Background Visual: Corrected Z-index (z-0) -->
+            <div class="absolute inset-0 hero-bg z-0"></div>
+
+            <!-- Content Container: Elevated Z-index (z-10) -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold text-gray-900 leading-tight">
+                    Heat your meal anywhere — <br class="hidden md:inline"> <span class="text-gradient">no gas, no microwave.</span>
+                </h1>
+                <p class="mt-8 text-xl md:text-2xl font-serif text-gray-600 max-w-4xl mx-auto animate-fadeInUp delay-200">
+                    India’s first self-heating ready meal box. **Minimal, luxurious, and instantly hot.**
+                </p>
+                <div class="mt-12 flex justify-center space-x-4 animate-fadeInUp delay-500">
+                    <a href="#products" class="px-8 py-4 text-lg font-semibold rounded-full bg-orange-600 text-white shadow-xl shadow-orange-300/80 hover:bg-orange-700 transition duration-300 transform hover:scale-105">
+                        Explore Meals
+                    </a>
+                    <a href="#how-it-works" class="px-8 py-4 text-lg font-semibold rounded-full border-2 border-gray-300 text-gray-700 hover:bg-gray-100 transition duration-300">
+                        Watch How It Works
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-gray-100">
+
+        <!-- 2. How It Works (3-Step Animated) -->
+        <section id="how-it-works" class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-16">
+                    🔥 The <span class="text-orange-600">3-Step Magic</span>
+                </h2>
+                <div class="grid md:grid-cols-3 gap-10">
+                    
+                    <!-- Step 1: Pull the string -->
+                    <div class="text-center p-8 bg-gray-50 rounded-3xl shadow-xl transition duration-500 group hover:shadow-orange-100">
+                        <div class="w-20 h-20 mx-auto bg-orange-100 rounded-full flex items-center justify-center text-4xl text-orange-600 mb-6 group-hover:rotate-3 transition duration-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zm10 2.5v-2.5m-5 2.5a2.5 2.5 0 10-5 0 2.5 2.5 0 005 0zm0 0h6m4 0v-2.5m-4 2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21V3" /></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">1. Pull the String</h3>
+                        <p class="text-gray-600 font-serif">A subtle, satisfying pull breaks the internal water sachet, starting the process.</p>
+                    </div>
+
+                    <!-- Step 2: Heater activates -->
+                    <div class="text-center p-8 bg-gray-50 rounded-3xl shadow-xl transition duration-500 group hover:shadow-orange-100">
+                        <div class="w-20 h-20 mx-auto bg-orange-100 rounded-full flex items-center justify-center text-4xl text-orange-600 mb-6 group-hover:scale-110 transition duration-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 017.343 7.343S7 9 7 9m9.657-1.343a8 8 0 01-9.314 9.314S17 15 17 15m0-12h-4m4 0v4m-2.5 3h.01M16.5 16.5h.01" /></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">2. Heater Activates</h3>
+                        <p class="text-gray-600 font-serif">The safe chemical reaction begins in the isolated chamber, generating heat.</p>
+                    </div>
+
+                    <!-- Step 3: Food Heats -->
+                    <div class="text-center p-8 bg-gray-50 rounded-3xl shadow-xl transition duration-500 group hover:shadow-orange-100">
+                        <div class="w-20 h-20 mx-auto bg-orange-100 rounded-full flex items-center justify-center text-4xl text-orange-600 mb-6 group-hover:animate-pulse transition duration-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">3. Hot in 5–8 Min</h3>
+                        <p class="text-gray-600 font-serif">Wait a few minutes, and enjoy your delicious, piping hot meal anywhere.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-gray-100">
+
+        <!-- 3. Product Gallery (Refactored with Cart Logic) -->
+        <section id="products" class="py-24 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-16">
+                    🍽️ The <span class="text-orange-600">HeatBox</span> Menu
+                </h2>
+                <div id="product-list" class="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
+                    <!-- Product cards will be rendered here by JavaScript -->
+                    <!-- Placeholder product HTML structure (for JS reference) -->
+                    <!-- 
+                    <div class="product-card bg-white rounded-3xl p-6 shadow-xl ...">
+                        ...
+                        <div class="mt-4 flex items-center justify-between">
+                            <input type="number" value="1" min="1" class="w-16 p-2 border rounded-lg text-center" data-product-id="P001">
+                            <button onclick="addToCart('P001')" class="px-4 py-2 text-sm font-semibold rounded-full bg-orange-600 text-white hover:bg-orange-700 transition">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </section>
+        
+        <hr class="border-gray-100">
+
+        <!-- 4. Science Behind the HeatBox -->
+        <section id="science" class="py-24 bg-gray-900 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">
+                        🔬 The Science of Instant Warmth
+                    </h2>
+                    <p class="text-gray-300 text-lg font-serif mb-8">
+                        We use a tested, safe **exothermic reaction** to generate pure, instant heat. It’s high-tech engineering meeting food safety standards.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex space-x-4 p-4 bg-gray-800 rounded-xl shadow-lg">
+                            <span class="text-orange-500 text-3xl font-bold flex-shrink-0">1.</span>
+                            <div>
+                                <h4 class="text-xl font-semibold text-orange-400">The Reaction</h4>
+                                <p class="text-gray-200">Quicklime (CaO) reacts with water . This is a stable, food-grade process generating heat.</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4 p-4 bg-gray-800 rounded-xl shadow-lg">
+                            <span class="text-orange-500 text-3xl font-bold flex-shrink-0">2.</span>
+                            <div>
+                                <h4 class="text-xl font-semibold text-orange-400">Peak Temperature</h4>
+                                <p class="text-gray-200">The insulated chamber reaches 90-100°C — the perfect temperature to steam and refresh your meal.</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4 p-4 bg-gray-800 rounded-xl shadow-lg">
+                            <span class="text-orange-500 text-3xl font-bold flex-shrink-0">3.</span>
+                            <div>
+                                <h4 class="text-xl font-semibold text-orange-400">Total Safety</h4>
+                                <p class="text-gray-200">The heating pack is hermetically sealed. The chemicals **never touch the food** or the meal container.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Visual for Trust -->
+                <div class="rounded-3xl overflow-hidden shadow-2xl shadow-orange-700/50">
+                    <img src="images/science_product_visual.png" alt="Sleek self-heating HeatBox product render" class="w-full h-auto object-cover">
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Why HeatBox (Use Case Cards) -->
+        <section id="why-heatbox" class="py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-16">
+                    🌍 Designed for <span class="text-orange-600">Your Life</span>
+                </h2>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Card 1: Travel -->
+                    <div class="p-8 bg-white rounded-3xl shadow-xl border-t-4 border-orange-500 hover:shadow-2xl transition duration-300">
+                        <span class="text-4xl text-orange-500 mb-4 inline-block">✈️</span>
+                        <h3 class="text-2xl font-bold mb-2">Perfect for Travel</h3>
+                        <p class="text-gray-600 font-serif">Mountain treks, long train rides, or road trips. Hot food is always on hand.</p>
+                    </div>
+                    
+                    <!-- Card 2: Office -->
+                    <div class="p-8 bg-white rounded-3xl shadow-xl border-t-4 border-yellow-500 hover:shadow-2xl transition duration-300">
+                        <span class="text-4xl text-yellow-500 mb-4 inline-block">🏢</span>
+                        <h3 class="text-2xl font-bold mb-2">The Office Lunch</h3>
+                        <p class="text-gray-600 font-serif">Skip the queue for the microwave. Heat your meal instantly at your desk.</p>
+                    </div>
+
+                    <!-- Card 3: Hostels -->
+                    <div class="p-8 bg-white rounded-3xl shadow-xl border-t-4 border-blue-500 hover:shadow-2xl transition duration-300">
+                        <span class="text-4xl text-blue-500 mb-4 inline-block">📚</span>
+                        <h3 class="text-2xl font-bold mb-2">Hostel & Dorm Life</h3>
+                        <p class="text-gray-600 font-serif">No access to cooking facilities? No problem. Get a fresh, hot meal daily.</p>
+                    </div>
+
+                    <!-- Card 4: Emergency -->
+                    <div class="p-8 bg-white rounded-3xl shadow-xl border-t-4 border-red-500 hover:shadow-2xl transition duration-300">
+                        <span class="text-4xl text-red-500 mb-4 inline-block">🚨</span>
+                        <h3 class="text-2xl font-bold mb-2">Disaster Meals</h3>
+                        <p class="text-gray-600 font-serif">A vital, long-shelf-life source of hot nutrition during emergencies or outages.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-gray-100">
+
+        <!-- 6. Testimonials -->
+        <section id="testimonials" class="py-24 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-16">
+                    💬 What Early Adopters Say
+                </h2>
+                <div class="grid md:grid-cols-3 gap-10">
+                    
+                    <!-- Testimonial 1 -->
+                    <div class="p-8 bg-white rounded-3xl shadow-2xl border-l-4 border-orange-500">
+                        <p class="text-gray-700 italic font-serif text-lg mb-6">"Finally! I can have a proper hot meal during my 12-hour train journey without relying on station food. The Masala Pasta was incredible."</p>
+                        <div class="flex items-center">
+                            <img class="w-12 h-12 rounded-full object-cover mr-4" src="images/priya_sharma_profile.png" alt="Priya Sharma Profile Photo">
+                            <div>
+                                <p class="font-bold text-gray-900">Priya Sharma</p>
+                                <p class="text-sm text-orange-600">Software Engineer, Mumbai</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="p-8 bg-white rounded-3xl shadow-2xl border-l-4 border-orange-500">
+                        <p class="text-gray-700 italic font-serif text-lg mb-6">"My office microwave is always packed. HeatBox is a lifesaver. It feels premium and the Paneer Pulao is better than most restaurants."</p>
+                        <div class="flex items-center">
+                            <img class="w-12 h-12 rounded-full object-cover mr-4" src="images/arjun_verma_profile.png" alt="Arjun Verma Profile Photo">
+                            <div>
+                                <p class="font-bold text-gray-900">Arjun Verma</p>
+                                <p class="text-sm text-orange-600">Marketing Head, Delhi</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="p-8 bg-white rounded-3xl shadow-2xl border-l-4 border-orange-500">
+                        <p class="text-gray-700 italic font-serif text-lg mb-6">"I backpacked across Himachal, and this was my secret weapon. Pull, wait, eat. No stove needed. Pure innovation!"</p>
+                        <div class="flex items-center">
+                            <img class="w-12 h-12 rounded-full object-cover mr-4" src="images/sanya_kapoor_profile.png" alt="Sanya Kapoor Profile Photo">
+                            <div>
+                                <p class="font-bold text-gray-900">Sanya Kapoor</p>
+                                <p class="text-sm text-orange-600">Travel Vlogger, Bangalore</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 7. Checkout Overlay (Refactored to show Cart) -->
+    <div id="checkout-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-80 z-50 hidden items-center justify-center p-4">
+        <div class="max-w-4xl w-full flex bg-white rounded-3xl shadow-2xl overflow-hidden relative" style="max-height: 90vh;">
+            
+            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-3xl z-10">&times;</button>
+
+            <!-- Checkout Cart Summary (Left Side) -->
+            <div class="w-full md:w-1/2 p-10 bg-gray-50 flex flex-col">
+                <h3 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-4 border-gray-200">Your Cart</h3>
+
+                <div id="cart-items-list" class="flex-grow space-y-4 pr-2 scrollbar-hidden overflow-y-auto">
+                    <!-- Cart items rendered here -->
+                    <p class="text-gray-500 italic">Your cart is empty.</p>
+                </div>
+
+                <!-- Totals Summary -->
+                <div class="mt-6 pt-4 border-t border-gray-300">
+                    <div class="flex justify-between text-gray-700 mb-2">
+                        <span>Subtotal:</span>
+                        <span id="cart-subtotal" class="font-semibold">₹0.00</span>
+                    </div>
+                    <div class="flex justify-between text-gray-700 mb-2">
+                        <span>Tax (5% GST):</span>
+                        <span id="cart-tax" class="font-semibold">₹0.00</span>
+                    </div>
+                    <div class="flex justify-between text-xl font-extrabold text-gray-900 mt-4 pt-4 border-t border-gray-400">
+                        <span>Grand Total:</span>
+                        <span id="cart-grand-total" class="text-orange-600">₹0.00</span>
+                    </div>
+                </div>
+
+                <p id="empty-cart-message" class="text-center text-red-500 font-semibold mt-4 hidden">Please add items to your cart before proceeding.</p>
+            </div>
+            
+            <!-- Checkout Form & Payment (Right Side) -->
+            <div id="actual-form-container" class="w-full md:w-1/2 p-10 flex flex-col justify-between">
+                
+                <div id="actual-form">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-6">Delivery & Payment</h3>
+                    <form onsubmit="event.preventDefault(); completeOrder();">
+                        <div class="space-y-4 mb-8">
+                            <input type="text" placeholder="Full Name" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                            <input type="email" placeholder="Email Address" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                            <textarea placeholder="Delivery Address" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500"></textarea>
+                            <input type="tel" placeholder="Phone Number" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                        </div>
+
+                        <!-- Payment Options -->
+                        <div>
+                            <h4 class="font-semibold text-lg mb-3 text-gray-800">Select Payment Method:</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-orange-50 cursor-pointer">
+                                    <input type="radio" name="payment-method" value="card" required class="text-orange-600 focus:ring-orange-500" checked>
+                                    <span class="ml-3 font-medium text-gray-700">Card Payment (Online)</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-orange-50 cursor-pointer">
+                                    <input type="radio" name="payment-method" value="upi" required class="text-orange-600 focus:ring-orange-500">
+                                    <span class="ml-3 font-medium text-gray-700">UPI / QR Code</span>
+                                </label>
+                                <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-orange-50 cursor-pointer">
+                                    <input type="radio" name="payment-method" value="cash" required class="text-orange-600 focus:ring-orange-500">
+                                    <span class="ml-3 font-medium text-gray-700">Cash on Delivery (COD)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <button id="order-button" type="submit" class="w-full py-4 text-xl font-semibold rounded-xl bg-orange-600 text-white hover:bg-orange-700 transition duration-300 shadow-lg disabled:opacity-50" disabled>
+                                Place Order <span id="button-total">₹0.00</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Final Success Message -->
+                <div id="interest-message" class="hidden mt-8 p-6 bg-green-50 border-l-4 border-green-400 rounded-lg text-center">
+                    <h4 class="text-3xl font-bold text-green-700 mb-3">✅ Order Confirmed! (Interest Test)</h4>
+                    <p class="text-green-800 text-lg font-serif">
+                        Thank you for validating this idea! Your order details have been saved as part of our **product interest test**. We will notify you first when the real HeatBox launch begins.
+                    </p>
+                    <button onclick="closeCheckout();" class="mt-6 px-6 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-12">
+            
+            <!-- Column 1: Logo & Mission -->
+            <div>
+                <a href="#" class="text-3xl font-extrabold text-orange-600 tracking-wider">HeatBox</a>
+                <p class="mt-4 text-sm font-serif">The future of hot, ready-to-eat meals. Anywhere, anytime.</p>
+                <div class="flex space-x-4 mt-6">
+                    <a href="#" class="text-gray-500 hover:text-orange-500 transition">F</a>
+                    <a href="#" class="text-gray-500 hover:text-orange-500 transition">I</a>
+                    <a href="#" class="text-gray-500 hover:text-orange-500 transition">T</a>
+                </div>
+            </div>
+
+            <!-- Column 2: Quick Links -->
+            <div>
+                <h4 class="text-xl font-semibold text-white mb-4">Quick Links</h4>
+                <ul class="space-y-3">
+                    <li><a href="#products" class="hover:text-white transition">Menu</a></li>
+                    <li><a href="#science" class="hover:text-white transition">The Tech</a></li>
+                    <li><a href="#why-heatbox" class="hover:text-white transition">Use Cases</a></li>
+                    <li><a href="#testimonials" class="hover:text-white transition">Reviews</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Legal -->
+            <div>
+                <h4 class="text-xl font-semibold text-white mb-4">Legal</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="hover:text-white transition">About HeatBox</a></li>
+                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: Contact -->
+            <div>
+                <h4 class="text-xl font-semibold text-white mb-4">Contact</h4>
+                <p>hello@heatboxindia.com</p>
+                <p>+91 98765 43210</p>
+                <p class="mt-4 text-sm font-serif">Registered in Bangalore, India</p>
+            </div>
+
+        </div>
+        <div class="mt-10 pt-8 border-t border-gray-700 text-center text-sm text-gray-500">
+            &copy; 2025 HeatBox India. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript for E-commerce Functionality -->
+    <script>
+        // --- DATA SETUP ---
+        const PRODUCTS = [
+            { id: 'P001', name: 'Paneer Pulao', description: 'Indian comfort. Mildly spiced.', price: 120, img: 'images/paneer_pulao.png', tag: 'Classic' },
+            { id: 'P002', name: 'Veg Biryani', description: 'Aromatic basmati rice and fresh vegetables.', price: 150, img: 'images/veg_biryani.png', tag: 'Spicy' },
+            { id: 'P003', name: 'Masala Pasta', description: 'Italian twist with Indian heat.', price: 135, img: 'images/masala_pasta.png', tag: 'Fusion' },
+            { id: 'P004', name: 'Protein Khichdi', description: 'Power-packed grains and lentils.', price: 110, img: 'images/protein_khichdi.png', tag: 'Healthy' },
+            { id: 'P005', name: 'Seasonal Soup', description: 'Hot, refreshing broths for any weather.', price: 90, img: 'images/seasonal_soup.png', tag: 'Seasonal' },
+        ];
+        
+        let cart = []; // State for the shopping cart: [{ id: 'P001', qty: 2 }, ...]
+        const GST_RATE = 0.05; // 5% Goods and Services Tax for India
+
+        // --- CORE CART FUNCTIONS ---
+
+        /**
+         * Renders the initial product list in the section.
+         */
+        function renderProductList() {
+            const container = document.getElementById('product-list');
+            container.innerHTML = PRODUCTS.map(product => {
+                const tagColor = product.tag === 'Healthy' ? 'bg-green-100 text-green-600' : 'bg-orange-100 text-orange-600';
+                return `
+                    <div class="product-card bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:border-orange-300 border border-transparent transition duration-300 transform hover:-translate-y-1 cursor-pointer overflow-hidden">
+                        <div class="h-40 overflow-hidden rounded-2xl mb-4">
+                            <img class="product-img w-full h-full object-cover transition duration-500" src="${product.img}" alt="${product.name}">
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">${product.name}</h3>
+                        <p class="text-sm text-gray-500 font-serif mt-1">${product.description}</p>
+                        <div class="mt-3 flex justify-between items-center">
+                            <p class="text-lg font-extrabold text-orange-600">₹${product.price}</p>
+                            <span class="inline-block px-3 py-1 text-xs font-bold ${tagColor} rounded-full">${product.tag}</span>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <input type="number" id="qty-${product.id}" value="1" min="1" class="w-16 p-2 border border-gray-300 rounded-lg text-center" onchange="this.value = Math.max(1, this.value);">
+                            <button onclick="addToCart('${product.id}')" class="px-4 py-2 text-sm font-semibold rounded-full bg-orange-600 text-white hover:bg-orange-700 transition transform hover:scale-105">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        /**
+         * Adds a product to the cart or increments its quantity.
+         * @param {string} productId - The ID of the product.
+         */
+        function addToCart(productId) {
+            const qtyInput = document.getElementById(`qty-${productId}`);
+            const quantity = parseInt(qtyInput.value, 10);
+            
+            if (quantity < 1 || isNaN(quantity)) {
+                console.error("Invalid quantity");
+                return;
+            }
+
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.qty += quantity;
+            } else {
+                cart.push({ id: productId, qty: quantity });
+            }
+            
+            updateCartUI();
+            
+            // Reset quantity input to 1 for next add
+            qtyInput.value = 1;
+
+            // Show a simple confirmation message (optional, for UX)
+            // You can implement a nicer floating toast notification here.
+            console.log(`${quantity} x ${PRODUCTS.find(p => p.id === productId).name} added to cart.`);
+        }
+        
+        /**
+         * Updates the quantity of an item directly in the cart.
+         * @param {string} productId - The ID of the product.
+         * @param {number} newQty - The new quantity.
+         */
+        function updateCartQuantity(productId, newQty) {
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            if (itemIndex > -1) {
+                const quantity = parseInt(newQty, 10);
+                if (quantity < 1 || isNaN(quantity)) {
+                    // Remove item if quantity is zero or invalid
+                    cart.splice(itemIndex, 1);
+                } else {
+                    cart[itemIndex].qty = quantity;
+                }
+            }
+            updateCartUI();
+        }
+
+        /**
+         * Calculates cart totals (Subtotal, Tax, Grand Total).
+         * @returns {object} Totals object.
+         */
+        function calculateTotals() {
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const product = PRODUCTS.find(p => p.id === item.id);
+                if (product) {
+                    subtotal += product.price * item.qty;
+                }
+            });
+            
+            const tax = subtotal * GST_RATE;
+            const grandTotal = subtotal + tax;
+
+            return { subtotal, tax, grandTotal };
+        }
+
+        /**
+         * Renders the cart items in the checkout overlay and updates the totals.
+         */
+        function renderCartItems() {
+            const listContainer = document.getElementById('cart-items-list');
+            if (cart.length === 0) {
+                listContainer.innerHTML = '<p class="text-gray-500 italic text-center py-8">Your cart is empty. Add some delicious meals!</p>';
+                return;
+            }
+
+            listContainer.innerHTML = cart.map(item => {
+                const product = PRODUCTS.find(p => p.id === item.id);
+                const itemTotal = (product.price * item.qty).toFixed(2);
+
+                return `
+                    <div class="flex items-center space-x-4 border-b pb-4 last:border-b-0">
+                        <img src="${product.img}" alt="${product.name}" class="w-16 h-16 object-cover rounded-lg">
+                        <div class="flex-grow">
+                            <p class="font-semibold text-gray-900">${product.name}</p>
+                            <p class="text-sm text-gray-500">₹${product.price} / meal</p>
+                        </div>
+                        <input type="number" value="${item.qty}" min="0" onchange="updateCartQuantity('${item.id}', this.value)" 
+                            class="w-16 p-1 border border-gray-300 rounded-lg text-center focus:ring-orange-500 focus:border-orange-500">
+                        <p class="font-bold text-lg text-orange-600 w-20 text-right">₹${itemTotal}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        /**
+         * Updates all cart related UI elements (count, totals, list).
+         */
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totals = calculateTotals();
+
+            // 1. Update Navbar Count
+            document.getElementById('cart-count').textContent = totalItems;
+            
+            // 2. Update Checkout Totals
+            document.getElementById('cart-subtotal').textContent = `₹${totals.subtotal.toFixed(2)}`;
+            document.getElementById('cart-tax').textContent = `₹${totals.tax.toFixed(2)}`;
+            document.getElementById('cart-grand-total').textContent = `₹${totals.grandTotal.toFixed(2)}`;
+            document.getElementById('button-total').textContent = `₹${totals.grandTotal.toFixed(2)}`;
+
+            // 3. Enable/Disable Order Button
+            const orderButton = document.getElementById('order-button');
+            const emptyMessage = document.getElementById('empty-cart-message');
+
+            if (totalItems > 0) {
+                orderButton.disabled = false;
+                emptyMessage.classList.add('hidden');
+            } else {
+                orderButton.disabled = true;
+                emptyMessage.classList.remove('hidden');
+            }
+            
+            // 4. Re-render list
+            renderCartItems();
+        }
+
+        /**
+         * Shows the checkout overlay and prepares the UI.
+         */
+        function showCheckout() {
+            const overlay = document.getElementById('checkout-overlay');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            
+            // Ensure the form is visible and the success message is hidden
+            document.getElementById('actual-form-container').querySelector('#actual-form').classList.remove('hidden');
+            document.getElementById('interest-message').classList.add('hidden');
+
+            updateCartUI(); // Initial render of items and totals
+        }
+
+        /**
+         * Closes the checkout overlay.
+         */
+        function closeCheckout() {
+            const overlay = document.getElementById('checkout-overlay');
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+        }
+
+        /**
+         * Handles the final order submission (shows the interest message).
+         */
+        function completeOrder() {
+            // In a real app, this is where payment processing and database storage would occur.
+            // Since this is an interest test, we skip payment and show the final message.
+            const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            const totals = calculateTotals();
+
+            console.log("--- MOCK ORDER SUBMITTED ---");
+            console.log("Items:", cart);
+            console.log("Grand Total:", totals.grandTotal.toFixed(2));
+            console.log("Payment Method:", paymentMethod);
+            
+            // Show the success/interest test message
+            document.getElementById('actual-form-container').querySelector('#actual-form').classList.add('hidden');
+            document.getElementById('interest-message').classList.remove('hidden');
+
+            // Clear the cart after successful "order"
+            cart = [];
+            updateCartUI();
+        }
+
+        // --- GLOBAL UI SCRIPTS ---
+
+        // 1. Floating Navbar Hide/Show on Scroll
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 200) { 
+                if (scrollTop > lastScrollTop) {
+                    navbar.classList.add('nav-hidden');
+                } else {
+                    navbar.classList.remove('nav-hidden');
+                }
+            } else {
+                navbar.classList.remove('nav-hidden');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, false);
+        
+        // Initialize product list on load
+        window.onload = () => {
+            renderProductList();
+            updateCartUI(); // Initialize cart counter
+        };
+
+    </script>
+</body>
+</html>
